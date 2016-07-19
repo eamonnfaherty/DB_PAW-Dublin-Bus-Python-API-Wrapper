@@ -69,7 +69,7 @@ Returns specific stop information such as *latitude*, *longitude*, *fullname* as
 Returns general route information as well as stop information for stops en route.
 - *Does not have .stopid attribute.*
 
-##### RTPI_API.def operator_info(
+##### RTPI_API.def operator_info()
 Returns the currently supported operators and their operator refrences.
 - *Does not have .stopid attribute.*
 
