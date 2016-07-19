@@ -54,26 +54,26 @@ Accessible attributes:
 - **.timestamp** (str)
 - **.results** (dict)
 
-##### RTPI_API.rtpi(self, stop, route=None, max_results=None, operator=None)
+##### RTPI_API.rtpi(stop, route=None, max_results=None, operator=None)
 Returns Real Time Passenger Information on the given stop. You can narrow down the results with additional paramters.
 **stop** must be a stop id number in string format. **route** must be a valid route id; for example '46a'. **max_results** takes a string formatted number, like '5'. Operator takes an operator refrence such as 'bac'.
 
-##### RTPI_API.tt_info(self, type_, stop, route, datetime=None, max_results=None, operator=None)
+##### RTPI_API.tt_info(type_, stop, route, datetime=None, max_results=None, operator=None)
 Returns timetable information over a period given by **type_**. 'day' and 'week' are examples of valid **type_**'s. **datetime** allows you to select a particular date in the format 'DD/MM/YYYY'.
 
-##### RTPI_API.stop_info(self, stop=None, stop_name=None, operator=None)
+##### RTPI_API.stop_info(stop=None, stop_name=None, operator=None)
 Returns specific stop information such as *latitude*, *longitude*, *fullname* as well as information on what operators use the stop.
 - *Does not have .stopid attribute.*
 
-##### RTPI_API.route_info(self, route, operator):
+##### RTPI_API.route_info(route, operator):
 Returns general route information as well as stop information for stops en route.
 - *Does not have .stopid attribute.*
 
-##### RTPI_API.def operator_info(self):
+##### RTPI_API.def operator_info(
 Returns the currently supported operators and their operator refrences.
 - *Does not have .stopid attribute.*
 
-##### RTPI_API.route_list(self, operator= None):
+##### RTPI_API.route_list(operator= None):
 Returns information about what routes are in the system.
 - *Does not have .stopid attribute.*
 
