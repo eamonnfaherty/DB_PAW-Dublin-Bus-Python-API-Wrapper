@@ -33,7 +33,7 @@ print(my_stop.timestamp)
 
 This module does not support xml results, only JSON.
 
-This module combines the *3.4.2 Retrieve Bus Timetable Information and Date*  method with the *3.4.3 Retrieve Full Timetable Bus Information* method, forming one singular method, forcing **routeid** to be a required parameter. *3.4.2* was buggy without it if a **type** parameter was supplied, and they were too similar to warrant seperate methods anyway.
+This module combines the *3.4.2 Retrieve Bus Timetable Information and Date*  method with the *3.4.3 Retrieve Full Timetable Bus Information* method, forming one singular method, forcing **route** to be a required parameter. *3.4.2* was buggy without it if a **type** parameter was supplied, and they were too similar to warrant seperate methods anyway.
 
 [Here's a link to the bare api.](https://data.dublinked.ie/dataset/c9df9a0b-d17a-40ff-a5d4-01da0cf08617/resource/4b9f2c4f-6bf5-4958-a43a-f12dab04cf61/download/rtpirestapispecification.pdf)
 
