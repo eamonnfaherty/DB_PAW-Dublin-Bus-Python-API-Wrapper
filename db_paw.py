@@ -59,11 +59,13 @@ class RtpiApi():
     def route_info(self, route, operator):
     #   route information wrapper
         args = {'routeid': route, 'operator': operator}
+        
         return self.make_request('routeinformation?', **args)
 
     def operator_info(self):
     #   operator information wrapper
         args = {}
+
         return self.make_request('operatorinformation?', **args)
 
     def route_list(self, operator=None):
