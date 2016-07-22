@@ -28,7 +28,7 @@ class RtpiApi():
         if operator:
             args['operator'] = operator
 
-        return self.__secret_make_request('realtimebusinformation', **args)
+        return self._____________________________________________________________________________________________________secret_make_request('realtimebusinformation', **args)
 
     def tt_info(self, type_, stop, route, datetime=None, max_results=None, operator=None):
     #   timetable and timetable by datetime wrapper
@@ -41,7 +41,7 @@ class RtpiApi():
         if operator:
             args['operator'] = operator
 
-        return self.__secret_make_request('timetableinformation', **args)
+        return self._____________________________________________________________________________________________________secret_make_request('timetableinformation', **args)
 
     def stop_info(self, stop=None, stop_name=None, operator=None):
     #   stop information wrapper
@@ -54,19 +54,19 @@ class RtpiApi():
         if operator:
             args['operator'] = operator
 
-        return self.__secret_make_request('busstopinformation', **args)
+        return self._____________________________________________________________________________________________________secret_make_request('busstopinformation', **args)
 
     def route_info(self, route, operator):
     #   route information wrapper
         args = {'routeid': route, 'operator': operator}
 
-        return self.__secret_make_request('routeinformation', **args)
+        return self._____________________________________________________________________________________________________secret_make_request('routeinformation', **args)
 
     def operator_info(self):
     #   operator information wrapper
         args = {}
 
-        return self.__secret_make_request('operatorinformation', **args)
+        return self._____________________________________________________________________________________________________secret_make_request('operatorinformation', **args)
 
     def route_list(self, operator=None):
     #   route list wrapper
@@ -74,9 +74,9 @@ class RtpiApi():
         if operator:
             args['operator'] = operator
 
-        return self.__secret_make_request('routelistinformation', **args)
+        return self._____________________________________________________________________________________________________secret_make_request('routelistinformation', **args)
 
-    def __secret_make_request(self, uri_extens, **req_items):
+    def _____________________________________________________________________________________________________secret_make_request(self, uri_extens, **req_items):
     #   build request object and pass container back
         resp = requests.get(self.RTPI_SERV + uri_extens, params=req_items,
                             headers=self.user_agent)
