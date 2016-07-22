@@ -5,12 +5,13 @@ from sys import exit
 try:
     import requests
 except ImportError:
-    print('db_paw requires Requests (http://docs.python-requests.org/en/master/)')
+    print('Requires Requests (http://docs.python-requests.org/en/master/)')
     sys.exit(1)
 
 
 class RtpiApi():
     """Class to handle all interactions with the RTPI API"""
+
     RTPI_SERV = 'https://data.dublinked.ie/cgi-bin/rtpi/'
 
     def __init__(self, user_agent=None):
@@ -62,10 +63,10 @@ class RtpiApi():
 
     def operator_info(self):
     #   operator information wrapper
-        args={}
+        args = {}
         return self.make_request('operatorinformation?', **args)
 
-    def route_list(self, operator= None):
+    def route_list(self, operator=None):
     #   route list wrapper
         args = {}
         if operator:
@@ -75,7 +76,7 @@ class RtpiApi():
 
     def make_request(self, uri_extens, **req_items):
     #   build request object and pass container back
-        resp = requests.get(self.RTPI_SERV + uri_extens, params=req_items, 
+        resp = requests.get(self.RTPI_SERV + uri_extens, params=req_items,
                             headers=self.user_agent)
         resp_json = resp.json()
         return MagicBox(**resp_json)
