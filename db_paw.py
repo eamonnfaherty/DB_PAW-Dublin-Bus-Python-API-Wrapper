@@ -1,91 +1,84 @@
 #!/usr/bin/python3
+from sys import exit
 
 #   db_paw requires the Requests lib!
 try:
     import requests
 except ImportError:
     print('db_paw requires Requests (http://docs.python-requests.org/en/master/)')
-    raise SystemExit
+    sys.exit(1)
 
 
-class RTPI_API():
+class RtpiApi():
     """Class to handle all interactions with the RTPI API"""
+    RTPI_SERV = 'https://data.dublinked.ie/cgi-bin/rtpi/'
+
     def __init__(self, user_agent=None):
         self.user_agent = {'User-Agent': user_agent}
-        self.rtpi_serv = 'https://data.dublinked.ie/cgi-bin/rtpi/'
-        self.request = ''
 
     def rtpi(self, stop, route=None, max_results=None, operator=None):
     #   real time passenger info wrapper
-        self.request = self.rtpi_serv + 'realtimebusinformation?' + 'stopid=' + stop
-        if route:
-            self.request += '&routeid=' + route
-        if max_results:
-            self.request += '&maxresults=' + max_results
-        if operator:
-            self.request += '&operator=' + operator
+        args = {'stopid': stop}
 
-        req = requests.get(self.request, headers=self.user_agent)
-        req = req.json()
-        return MagicBox(**req)
+        if route:
+            args['routeid'] = route
+        if max_results:
+            args['maxresults'] = max_results
+        if operator:
+            args['operator'] = operator
+
+        return self.make_request('realtimebusinformation?', **args)
 
     def tt_info(self, type_, stop, route, datetime=None, max_results=None, operator=None):
     #   timetable and timetable by datetime wrapper
-        self.request = (self.rtpi_serv + 'timetableinformation?' + '&type=' + type_
-                        + '&stopid=' + stop + '&routeid=' + route)
+        args = {'type': type_, 'routeid': route, 'stopid': stop}
 
         if datetime:
-            self.request += '&datetime=' + datetime
+            args['datetime'] = datetime
         if max_results:
-            self.request += '&maxresults=' + max_results
+            args['maxresults'] = max_results
         if operator:
-            self.request += '&operator=' + operator
+            args['operator'] = operator
 
-        req = requests.get(self.request, headers=self.user_agent)
-        req = req.json()
-        print(req)
-        return MagicBox(**req)
+        return self.make_request('timetableinformation?', **args)
 
     def stop_info(self, stop=None, stop_name=None, operator=None):
     #   stop information wrapper
-        self.request = self.rtpi_serv + 'busstopinformation?'
-        if stop:
-            self.request += '&stopid=' + stop
-        if stop_name:
-            self.request += '&stopname=' + stop_name
-        if operator:
-            self.request += '&operator=' + operator
+        args = {}
 
-        req = requests.get(self.request, headers=self.user_agent)
-        req = req.json()
-        return MagicBox(**req)
+        if stop:
+            args['stopid'] = stop
+        if stop_name:
+            args['stopname'] = stop_name
+        if operator:
+            args['operator'] = operator
+
+        return self.make_request('busstopinformation?', **args)
 
     def route_info(self, route, operator):
     #   route information wrapper
-        self.request = (self.rtpi_serv + 'routeinformation?' 
-                        + '&routeid=' + route + '&operator=' + operator)
-
-        req = requests.get(self.request, headers=self.user_agent)
-        req = req.json()
-        return MagicBox(**req)
+        args = {'routeid': route, 'operator': operator}
+        return self.make_request('routeinformation?', **args)
 
     def operator_info(self):
     #   operator information wrapper
-        self.request = self.rtpi_serv + 'operatorinformation?'
-
-        req = requests.get(self.request, headers=self.user_agent)
-        req = req.json()
-        return MagicBox(**req)
+        args={}
+        return self.make_request('operatorinformation?', **args)
 
     def route_list(self, operator= None):
     #   route list wrapper
-        self.request = self.rtpi_serv + 'routelistinformation?'
+        args = {}
         if operator:
-            self.request += '&operator=' + operator
+            args['operator'] = operator
 
-        req = requests.get(self.request, headers=self.user_agent)
-        req = req.json()
-        return MagicBox(**req)
+        return self.make_request('routelistinformation?', **args)
+
+    def make_request(self, uri_extens, **req_items):
+    #   build request object and pass container back
+        resp = requests.get(self.RTPI_SERV + uri_extens, params=req_items, 
+                            headers=self.user_agent)
+        resp_json = resp.json()
+        return MagicBox(**resp_json)
 
 
 class MagicBox:
