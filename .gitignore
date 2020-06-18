@@ -1,2 +1,6 @@
 env
 1.py
+venv
+*.pyc
+.idea
+*.iml

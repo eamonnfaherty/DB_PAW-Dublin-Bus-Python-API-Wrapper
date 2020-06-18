@@ -1,24 +1,15 @@
-#!/usr/bin/python3
-from sys import exit
-
-#   db_paw requires the Requests lib!
-try:
-    import requests
-except ImportError:
-    print('Requires Requests (http://docs.python-requests.org/en/master/)')
-    exit(1)
-
+import requests
 
 class RtpiApi():
     """Class to handle all interactions with the RTPI API"""
 
-    RTPI_SERV = 'https://data.dublinked.ie/cgi-bin/rtpi/'
+    RTPI_SERV = 'https://data.smartdublin.ie/cgi-bin/rtpi/'
 
     def __init__(self, user_agent=None):
         self.user_agent = {'User-Agent': user_agent}
 
     def rtpi(self, stop, route=None, max_results=None, operator=None):
-    #   real time passenger info wrapper
+        # real time passenger info wrapper
         args = {'stopid': stop}
 
         if route:
@@ -31,7 +22,7 @@ class RtpiApi():
         return self._make_request('realtimebusinformation', args)
 
     def tt_info(self, type_, stop, route, datetime=None, max_results=None, operator=None):
-    #   timetable and timetable by datetime wrapper
+        # timetable and timetable by datetime wrapper
         args = {'type': type_, 'routeid': route, 'stopid': stop}
 
         if datetime:
@@ -44,7 +35,7 @@ class RtpiApi():
         return self._make_request('timetableinformation', args)
 
     def stop_info(self, stop=None, stop_name=None, operator=None):
-    #   stop information wrapper
+        # stop information wrapper
         args = {}
 
         if stop:
@@ -57,19 +48,19 @@ class RtpiApi():
         return self._make_request('busstopinformation', args)
 
     def route_info(self, route, operator):
-    #   route information wrapper
+        # route information wrapper
         args = {'routeid': route, 'operator': operator}
 
         return self._make_request('routeinformation', args)
 
     def operator_info(self):
-    #   operator information wrapper
+        # operator information wrapper
         args = {}
 
         return self._make_request('operatorinformation', args)
 
     def route_list(self, operator=None):
-    #   route list wrapper
+        # route list wrapper
         args = {}
         if operator:
             args['operator'] = operator
@@ -77,7 +68,7 @@ class RtpiApi():
         return self._make_request('routelistinformation', args)
 
     def _make_request(self, uri_extens, req_items):
-    #   build request object and pass container back
+        # build request object and pass container back
         resp = requests.get(self.RTPI_SERV + uri_extens, params=req_items,
                             headers=self.user_agent)
         resp_json = resp.json()
@@ -85,7 +76,8 @@ class RtpiApi():
 
 
 class MagicBox:
-    '''A container class returned to user for cleaner data access.'''
+    """A container class returned to user for cleaner data access."""
+
     def __init__(self, response):
         for key, value in response.items():
             setattr(self, key, value)
