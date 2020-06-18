@@ -67,6 +67,3 @@ Returns the currently supported operators and their operator refrences.
 #### RTPI_API.route_list(operator= None):
 Returns information about what routes are in the system.
 - *Does not have .stopid attribute.*
-
-#### Licence
-MIT
